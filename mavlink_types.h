@@ -13,11 +13,19 @@ namespace mavlink {
 #endif
 
 // Macro to define packed structures
+/*
 #ifdef __GNUC__
   #define MAVPACKED( __Declaration__ ) __Declaration__ __attribute__((packed))
 #else
   #define MAVPACKED( __Declaration__ ) __pragma( pack(push, 1) ) __Declaration__ __pragma( pack(pop) )
 #endif
+*/
+
+/* Fix ..\MAVLINK\common\../mavlink_types.h(53): error: #20: identifier "pack" is undefined */
+#define MAVPACKED( __Declaration__ ) __Declaration__
+
+/* Fix..\MAVLINK\common\../mavlink_types.h(53): error: #3092: anonymous unions are only supported in --gnu mode, or when enabled with #pragma anon_unions*/
+#pragma anon_unions
 
 #ifndef MAVLINK_MAX_PAYLOAD_LEN
 // it is possible to override this, but be careful!

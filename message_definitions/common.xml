@@ -4406,5 +4406,14 @@
       <field type="uint16_t" name="min_distance" units="cm">Minimum distance the sensor can measure in centimeters</field>
       <field type="uint16_t" name="max_distance" units="cm">Maximum distance the sensor can measure in centimeters</field>
     </message>
+    <message id="500" name="STM32_F3_COMMAND">
+      <description>This message encodes all of the message from STM32_F3.</description>
+      <field type="uint8_t" name="command">Command message sending from STM32_F3.</field>
+      <field type="char[100]" name="f3_log">Log message sending from f3.</field>
+    </message>
+    <message id="501" name="STM32_F3_MOTOR_CURR">
+      <description>This message encodes all of the message from STM32_F3.</description>
+      <field type="float[10]" name="motor_curr">Current message of each motor.</field>
+    </message>
   </messages>
 </mavlink>

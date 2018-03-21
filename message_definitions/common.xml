@@ -4340,6 +4340,7 @@
       <field type="uint8_t[8]" name="spec_version_hash">The first 8 bytes (not characters printed in hex!) of the git hash.</field>
       <field type="uint8_t[8]" name="library_version_hash">The first 8 bytes (not characters printed in hex!) of the git hash.</field>
     </message>
+<<<<<<< HEAD
     <!-- UAVCAN related messages. Please keep the range [310, 320) reserved for UAVCAN. -->
     <message id="310" name="UAVCAN_NODE_STATUS">
       <description>General status information of an UAVCAN node. Please refer to the definition of the UAVCAN message "uavcan.protocol.NodeStatus" for the background information. The UAVCAN specification is available at http://uavcan.org.</description>
@@ -4414,6 +4415,16 @@
     <message id="501" name="STM32_F3_MOTOR_CURR">
       <description>This message encodes all of the message from STM32_F3.</description>
       <field type="float[10]" name="motor_curr">Current message of each motor.</field>
+    <message id="600" name="PID_AUTO_TUNE">
+      <description>This message encodes all of the message from pid auto tune.</description>
+      <field type="float" name="j_pid_tune">Judgment of pid performance.</field>
+      <field type="float" name="e_rate">error of rate.</field>
+      <field type="float" name="e_ang">error of angle.</field>
+      <field type="float" name="control_u">control output.</field>
+      <field type="float" name="error_ang_bet">error of two angles of previous and current  .</field>
+      <field type="float" name="ang_act">angle of current.</field>
+      <field type="float" name="angle_sp">angle of setpoint.</field>
+      <field type="float" name="ang_pre">angle of previous.</field>
     </message>
   </messages>
 </mavlink>

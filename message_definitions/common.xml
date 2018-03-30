@@ -4340,7 +4340,6 @@
       <field type="uint8_t[8]" name="spec_version_hash">The first 8 bytes (not characters printed in hex!) of the git hash.</field>
       <field type="uint8_t[8]" name="library_version_hash">The first 8 bytes (not characters printed in hex!) of the git hash.</field>
     </message>
-<<<<<<< HEAD
     <!-- UAVCAN related messages. Please keep the range [310, 320) reserved for UAVCAN. -->
     <message id="310" name="UAVCAN_NODE_STATUS">
       <description>General status information of an UAVCAN node. Please refer to the definition of the UAVCAN message "uavcan.protocol.NodeStatus" for the background information. The UAVCAN specification is available at http://uavcan.org.</description>
@@ -4415,6 +4414,7 @@
     <message id="501" name="STM32_F3_MOTOR_CURR">
       <description>This message encodes all of the message from STM32_F3.</description>
       <field type="float[10]" name="motor_curr">Current message of each motor.</field>
+    </message>
     <message id="600" name="PID_AUTO_TUNE">
       <description>This message encodes all of the message from pid auto tune.</description>
       <field type="float" name="j_pid_tune">Judgment of pid performance.</field>
@@ -4425,6 +4425,18 @@
       <field type="float" name="ang_act">angle of current.</field>
       <field type="float" name="angle_sp">angle of setpoint.</field>
       <field type="float" name="ang_pre">angle of previous.</field>
+    </message>
+    <message id="601" name="BATTERY_STATUS_2">
+      <description>Battery information</description>
+      <field type="uint8_t" name="id">Battery ID</field>
+      <field type="uint8_t" name="battery_function" enum="MAV_BATTERY_FUNCTION">Function of the battery</field>
+      <field type="uint8_t" name="type" enum="MAV_BATTERY_TYPE">Type (chemistry) of the battery</field>
+      <field type="int16_t" name="temperature" units="cdegC">Temperature of the battery in centi-degrees celsius. INT16_MAX for unknown temperature.</field>
+      <field type="uint16_t[10]" name="voltages" units="mV">Battery voltage of cells, in millivolts (1 = 1 millivolt). Cells above the valid cell count for this battery should have the UINT16_MAX value.</field>
+      <field type="int16_t" name="current_battery" units="cA">Battery current, in 10*milliamperes (1 = 10 milliampere), -1: autopilot does not measure the current</field>
+      <field type="int32_t" name="current_consumed" units="mAh">Consumed charge, in milliampere hours (1 = 1 mAh), -1: autopilot does not provide mAh consumption estimate</field>
+      <field type="int32_t" name="energy_consumed" units="hJ">Consumed energy, in HectoJoules (intergrated U*I*dt)  (1 = 100 Joule), -1: autopilot does not provide energy consumption estimate</field>
+      <field type="int8_t" name="battery_remaining" units="%">Remaining battery energy: (0%: 0, 100%: 100), -1: autopilot does not estimate the remaining battery</field>
     </message>
   </messages>
 </mavlink>

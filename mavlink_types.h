@@ -12,12 +12,15 @@
 namespace mavlink {
 #endif
 
+// ===== Avoid error:  #20: identifier "pack" is undefined =====
 // Macro to define packed structures
-#ifdef __GNUC__
-  #define MAVPACKED( __Declaration__ ) __Declaration__ __attribute__((packed))
-#else
-  #define MAVPACKED( __Declaration__ ) __pragma( pack(push, 1) ) __Declaration__ __pragma( pack(pop) )
-#endif
+//#ifdef __GNUC__
+//  #define MAVPACKED( __Declaration__ ) __Declaration__ __attribute__((packed))
+//#else
+//  #define MAVPACKED( __Declaration__ ) __pragma( pack(push, 1) ) __Declaration__ __pragma( pack(pop) )
+//#endif
+#define MAVPACKED( __Declaration__ ) __Declaration__
+// =============================================================
 
 #ifndef MAVLINK_MAX_PAYLOAD_LEN
 // it is possible to override this, but be careful!

@@ -6,16 +6,17 @@
 MAVPACKED(
 typedef struct __mavlink_stm32_f3_command_t {
  uint8_t command; /*< Command message sending from STM32_F3.*/
+ uint8_t param; /*<  parameter for debug.*/
  char f3_log[100]; /*< Log message sending from f3.*/
 }) mavlink_stm32_f3_command_t;
 
-#define MAVLINK_MSG_ID_STM32_F3_COMMAND_LEN 101
-#define MAVLINK_MSG_ID_STM32_F3_COMMAND_MIN_LEN 101
-#define MAVLINK_MSG_ID_500_LEN 101
-#define MAVLINK_MSG_ID_500_MIN_LEN 101
+#define MAVLINK_MSG_ID_STM32_F3_COMMAND_LEN 102
+#define MAVLINK_MSG_ID_STM32_F3_COMMAND_MIN_LEN 102
+#define MAVLINK_MSG_ID_500_LEN 102
+#define MAVLINK_MSG_ID_500_MIN_LEN 102
 
-#define MAVLINK_MSG_ID_STM32_F3_COMMAND_CRC 212
-#define MAVLINK_MSG_ID_500_CRC 212
+#define MAVLINK_MSG_ID_STM32_F3_COMMAND_CRC 79
+#define MAVLINK_MSG_ID_500_CRC 79
 
 #define MAVLINK_MSG_STM32_F3_COMMAND_FIELD_F3_LOG_LEN 100
 
@@ -23,17 +24,19 @@ typedef struct __mavlink_stm32_f3_command_t {
 #define MAVLINK_MESSAGE_INFO_STM32_F3_COMMAND { \
     500, \
     "STM32_F3_COMMAND", \
-    2, \
+    3, \
     {  { "command", NULL, MAVLINK_TYPE_UINT8_T, 0, 0, offsetof(mavlink_stm32_f3_command_t, command) }, \
-         { "f3_log", NULL, MAVLINK_TYPE_CHAR, 100, 1, offsetof(mavlink_stm32_f3_command_t, f3_log) }, \
+         { "param", NULL, MAVLINK_TYPE_UINT8_T, 0, 1, offsetof(mavlink_stm32_f3_command_t, param) }, \
+         { "f3_log", NULL, MAVLINK_TYPE_CHAR, 100, 2, offsetof(mavlink_stm32_f3_command_t, f3_log) }, \
          } \
 }
 #else
 #define MAVLINK_MESSAGE_INFO_STM32_F3_COMMAND { \
     "STM32_F3_COMMAND", \
-    2, \
+    3, \
     {  { "command", NULL, MAVLINK_TYPE_UINT8_T, 0, 0, offsetof(mavlink_stm32_f3_command_t, command) }, \
-         { "f3_log", NULL, MAVLINK_TYPE_CHAR, 100, 1, offsetof(mavlink_stm32_f3_command_t, f3_log) }, \
+         { "param", NULL, MAVLINK_TYPE_UINT8_T, 0, 1, offsetof(mavlink_stm32_f3_command_t, param) }, \
+         { "f3_log", NULL, MAVLINK_TYPE_CHAR, 100, 2, offsetof(mavlink_stm32_f3_command_t, f3_log) }, \
          } \
 }
 #endif
@@ -45,20 +48,23 @@ typedef struct __mavlink_stm32_f3_command_t {
  * @param msg The MAVLink message to compress the data into
  *
  * @param command Command message sending from STM32_F3.
+ * @param param  parameter for debug.
  * @param f3_log Log message sending from f3.
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_stm32_f3_command_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-                               uint8_t command, const char *f3_log)
+                               uint8_t command, uint8_t param, const char *f3_log)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_STM32_F3_COMMAND_LEN];
     _mav_put_uint8_t(buf, 0, command);
-    _mav_put_char_array(buf, 1, f3_log, 100);
+    _mav_put_uint8_t(buf, 1, param);
+    _mav_put_char_array(buf, 2, f3_log, 100);
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_STM32_F3_COMMAND_LEN);
 #else
     mavlink_stm32_f3_command_t packet;
     packet.command = command;
+    packet.param = param;
     mav_array_memcpy(packet.f3_log, f3_log, sizeof(char)*100);
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_STM32_F3_COMMAND_LEN);
 #endif
@@ -74,21 +80,24 @@ static inline uint16_t mavlink_msg_stm32_f3_command_pack(uint8_t system_id, uint
  * @param chan The MAVLink channel this message will be sent over
  * @param msg The MAVLink message to compress the data into
  * @param command Command message sending from STM32_F3.
+ * @param param  parameter for debug.
  * @param f3_log Log message sending from f3.
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_stm32_f3_command_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
                                mavlink_message_t* msg,
-                                   uint8_t command,const char *f3_log)
+                                   uint8_t command,uint8_t param,const char *f3_log)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_STM32_F3_COMMAND_LEN];
     _mav_put_uint8_t(buf, 0, command);
-    _mav_put_char_array(buf, 1, f3_log, 100);
+    _mav_put_uint8_t(buf, 1, param);
+    _mav_put_char_array(buf, 2, f3_log, 100);
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_STM32_F3_COMMAND_LEN);
 #else
     mavlink_stm32_f3_command_t packet;
     packet.command = command;
+    packet.param = param;
     mav_array_memcpy(packet.f3_log, f3_log, sizeof(char)*100);
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_STM32_F3_COMMAND_LEN);
 #endif
@@ -107,7 +116,7 @@ static inline uint16_t mavlink_msg_stm32_f3_command_pack_chan(uint8_t system_id,
  */
 static inline uint16_t mavlink_msg_stm32_f3_command_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_stm32_f3_command_t* stm32_f3_command)
 {
-    return mavlink_msg_stm32_f3_command_pack(system_id, component_id, msg, stm32_f3_command->command, stm32_f3_command->f3_log);
+    return mavlink_msg_stm32_f3_command_pack(system_id, component_id, msg, stm32_f3_command->command, stm32_f3_command->param, stm32_f3_command->f3_log);
 }
 
 /**
@@ -121,7 +130,7 @@ static inline uint16_t mavlink_msg_stm32_f3_command_encode(uint8_t system_id, ui
  */
 static inline uint16_t mavlink_msg_stm32_f3_command_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_stm32_f3_command_t* stm32_f3_command)
 {
-    return mavlink_msg_stm32_f3_command_pack_chan(system_id, component_id, chan, msg, stm32_f3_command->command, stm32_f3_command->f3_log);
+    return mavlink_msg_stm32_f3_command_pack_chan(system_id, component_id, chan, msg, stm32_f3_command->command, stm32_f3_command->param, stm32_f3_command->f3_log);
 }
 
 /**
@@ -129,20 +138,23 @@ static inline uint16_t mavlink_msg_stm32_f3_command_encode_chan(uint8_t system_i
  * @param chan MAVLink channel to send the message
  *
  * @param command Command message sending from STM32_F3.
+ * @param param  parameter for debug.
  * @param f3_log Log message sending from f3.
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_stm32_f3_command_send(mavlink_channel_t chan, uint8_t command, const char *f3_log)
+static inline void mavlink_msg_stm32_f3_command_send(mavlink_channel_t chan, uint8_t command, uint8_t param, const char *f3_log)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_STM32_F3_COMMAND_LEN];
     _mav_put_uint8_t(buf, 0, command);
-    _mav_put_char_array(buf, 1, f3_log, 100);
+    _mav_put_uint8_t(buf, 1, param);
+    _mav_put_char_array(buf, 2, f3_log, 100);
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_STM32_F3_COMMAND, buf, MAVLINK_MSG_ID_STM32_F3_COMMAND_MIN_LEN, MAVLINK_MSG_ID_STM32_F3_COMMAND_LEN, MAVLINK_MSG_ID_STM32_F3_COMMAND_CRC);
 #else
     mavlink_stm32_f3_command_t packet;
     packet.command = command;
+    packet.param = param;
     mav_array_memcpy(packet.f3_log, f3_log, sizeof(char)*100);
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_STM32_F3_COMMAND, (const char *)&packet, MAVLINK_MSG_ID_STM32_F3_COMMAND_MIN_LEN, MAVLINK_MSG_ID_STM32_F3_COMMAND_LEN, MAVLINK_MSG_ID_STM32_F3_COMMAND_CRC);
 #endif
@@ -156,7 +168,7 @@ static inline void mavlink_msg_stm32_f3_command_send(mavlink_channel_t chan, uin
 static inline void mavlink_msg_stm32_f3_command_send_struct(mavlink_channel_t chan, const mavlink_stm32_f3_command_t* stm32_f3_command)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
-    mavlink_msg_stm32_f3_command_send(chan, stm32_f3_command->command, stm32_f3_command->f3_log);
+    mavlink_msg_stm32_f3_command_send(chan, stm32_f3_command->command, stm32_f3_command->param, stm32_f3_command->f3_log);
 #else
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_STM32_F3_COMMAND, (const char *)stm32_f3_command, MAVLINK_MSG_ID_STM32_F3_COMMAND_MIN_LEN, MAVLINK_MSG_ID_STM32_F3_COMMAND_LEN, MAVLINK_MSG_ID_STM32_F3_COMMAND_CRC);
 #endif
@@ -170,16 +182,18 @@ static inline void mavlink_msg_stm32_f3_command_send_struct(mavlink_channel_t ch
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_stm32_f3_command_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t command, const char *f3_log)
+static inline void mavlink_msg_stm32_f3_command_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t command, uint8_t param, const char *f3_log)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char *buf = (char *)msgbuf;
     _mav_put_uint8_t(buf, 0, command);
-    _mav_put_char_array(buf, 1, f3_log, 100);
+    _mav_put_uint8_t(buf, 1, param);
+    _mav_put_char_array(buf, 2, f3_log, 100);
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_STM32_F3_COMMAND, buf, MAVLINK_MSG_ID_STM32_F3_COMMAND_MIN_LEN, MAVLINK_MSG_ID_STM32_F3_COMMAND_LEN, MAVLINK_MSG_ID_STM32_F3_COMMAND_CRC);
 #else
     mavlink_stm32_f3_command_t *packet = (mavlink_stm32_f3_command_t *)msgbuf;
     packet->command = command;
+    packet->param = param;
     mav_array_memcpy(packet->f3_log, f3_log, sizeof(char)*100);
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_STM32_F3_COMMAND, (const char *)packet, MAVLINK_MSG_ID_STM32_F3_COMMAND_MIN_LEN, MAVLINK_MSG_ID_STM32_F3_COMMAND_LEN, MAVLINK_MSG_ID_STM32_F3_COMMAND_CRC);
 #endif
@@ -202,13 +216,23 @@ static inline uint8_t mavlink_msg_stm32_f3_command_get_command(const mavlink_mes
 }
 
 /**
+ * @brief Get field param from stm32_f3_command message
+ *
+ * @return  parameter for debug.
+ */
+static inline uint8_t mavlink_msg_stm32_f3_command_get_param(const mavlink_message_t* msg)
+{
+    return _MAV_RETURN_uint8_t(msg,  1);
+}
+
+/**
  * @brief Get field f3_log from stm32_f3_command message
  *
  * @return Log message sending from f3.
  */
 static inline uint16_t mavlink_msg_stm32_f3_command_get_f3_log(const mavlink_message_t* msg, char *f3_log)
 {
-    return _MAV_RETURN_char_array(msg, f3_log, 100,  1);
+    return _MAV_RETURN_char_array(msg, f3_log, 100,  2);
 }
 
 /**
@@ -221,6 +245,7 @@ static inline void mavlink_msg_stm32_f3_command_decode(const mavlink_message_t* 
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     stm32_f3_command->command = mavlink_msg_stm32_f3_command_get_command(msg);
+    stm32_f3_command->param = mavlink_msg_stm32_f3_command_get_param(msg);
     mavlink_msg_stm32_f3_command_get_f3_log(msg, stm32_f3_command->f3_log);
 #else
         uint8_t len = msg->len < MAVLINK_MSG_ID_STM32_F3_COMMAND_LEN? msg->len : MAVLINK_MSG_ID_STM32_F3_COMMAND_LEN;

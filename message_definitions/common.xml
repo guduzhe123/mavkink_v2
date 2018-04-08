@@ -4409,6 +4409,7 @@
     <message id="500" name="STM32_F3_COMMAND">
       <description>This message encodes all of the message from STM32_F3.</description>
       <field type="uint8_t" name="command">Command message sending from STM32_F3.</field>
+      <field type="uint8_t" name="param"> parameter for debug.</field>
       <field type="char[100]" name="f3_log">Log message sending from f3.</field>
     </message>
     <message id="501" name="STM32_F3_MOTOR_CURR">

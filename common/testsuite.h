@@ -9756,11 +9756,12 @@ static void mavlink_test_stm32_f3_command(uint8_t system_id, uint8_t component_i
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
     mavlink_stm32_f3_command_t packet_in = {
-        5,"BCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUV"
+        5,72,"CDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVW"
     };
     mavlink_stm32_f3_command_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
         packet1.command = packet_in.command;
+        packet1.param = packet_in.param;
         
         mav_array_memcpy(packet1.f3_log, packet_in.f3_log, sizeof(char)*100);
         
@@ -9776,12 +9777,12 @@ static void mavlink_test_stm32_f3_command(uint8_t system_id, uint8_t component_i
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_stm32_f3_command_pack(system_id, component_id, &msg , packet1.command , packet1.f3_log );
+    mavlink_msg_stm32_f3_command_pack(system_id, component_id, &msg , packet1.command , packet1.param , packet1.f3_log );
     mavlink_msg_stm32_f3_command_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_stm32_f3_command_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.command , packet1.f3_log );
+    mavlink_msg_stm32_f3_command_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.command , packet1.param , packet1.f3_log );
     mavlink_msg_stm32_f3_command_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -9794,7 +9795,7 @@ static void mavlink_test_stm32_f3_command(uint8_t system_id, uint8_t component_i
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_stm32_f3_command_send(MAVLINK_COMM_1 , packet1.command , packet1.f3_log );
+    mavlink_msg_stm32_f3_command_send(MAVLINK_COMM_1 , packet1.command , packet1.param , packet1.f3_log );
     mavlink_msg_stm32_f3_command_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }
@@ -9938,9 +9939,9 @@ static void mavlink_test_battery_status_2(uint8_t system_id, uint8_t component_i
         packet1.battery_function = packet_in.battery_function;
         packet1.type = packet_in.type;
         packet1.battery_remaining = packet_in.battery_remaining;
-
+        
         mav_array_memcpy(packet1.voltages, packet_in.voltages, sizeof(uint16_t)*10);
-
+        
 #ifdef MAVLINK_STATUS_FLAG_OUT_MAVLINK1
         if (status->flags & MAVLINK_STATUS_FLAG_OUT_MAVLINK1) {
            // cope with extensions
@@ -9969,7 +9970,7 @@ static void mavlink_test_battery_status_2(uint8_t system_id, uint8_t component_i
         }
     mavlink_msg_battery_status_2_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
-
+        
         memset(&packet2, 0, sizeof(packet2));
     mavlink_msg_battery_status_2_send(MAVLINK_COMM_1 , packet1.id , packet1.battery_function , packet1.type , packet1.temperature , packet1.voltages , packet1.current_battery , packet1.current_consumed , packet1.energy_consumed , packet1.battery_remaining );
     mavlink_msg_battery_status_2_decode(last_msg, &packet2);

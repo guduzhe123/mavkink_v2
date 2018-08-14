@@ -22,6 +22,10 @@ namespace mavlink {
 #define MAVPACKED( __Declaration__ ) __Declaration__
 // =============================================================
 
+// ===== Avoid error: #3092: anonymous unions are only supported in --gnu mode
+#pragma anon_unions
+// =============================================================
+
 #ifndef MAVLINK_MAX_PAYLOAD_LEN
 // it is possible to override this, but be careful!
 #define MAVLINK_MAX_PAYLOAD_LEN 255 ///< Maximum payload length
